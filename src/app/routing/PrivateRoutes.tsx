@@ -3,18 +3,24 @@ import {Route, Routes, Navigate} from 'react-router-dom'
 import {MasterLayout} from '../../_everglow/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
+import {WithChildren} from '../../_everglow/helpers'
 import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_everglow/assets/ts/_utils'
-import {WithChildren} from '../../_everglow/helpers'
-import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
-
+import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper';
 const PrivateRoutes = () => {
-  const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
-  const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
-  const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
-  const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
-  const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
-  const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
+//   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
+//   const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
+//   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
+//   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
+//   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
+//   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
+  const UserWrapper = lazy(() => import('../modules/users/UserWrapper'))
+  const CampaignWrapper = lazy(() => import('../modules/campaigns/CampaignWrapper'))
+  const CommentsWrapper = lazy(() => import('../modules/comments/CommentsWrapper'))
+  const OccasionWrapper = lazy(() => import('../modules/occasion/OccasionWrapper'))
+  const InquiryWrapper = lazy(() => import('../modules/inquiry/InquiryWrapper'))
+  const NewFeedPage = lazy(() => import('../modules/newsfeed/NewsFeedPage'))
+  const SettingsPage = lazy(() => import('../modules/settings/SettingsPage'))
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -22,54 +28,60 @@ const PrivateRoutes = () => {
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
         <Route path='dashboard' element={<DashboardWrapper />} />
-        <Route path='builder' element={<BuilderPageWrapper />} />
-        <Route path='menu-test' element={<MenuTestPage />} />
         {/* Lazy Modules */}
         <Route
-          path='crafted/pages/profile/*'
+          path='users'
           element={
             <SuspensedView>
-              <ProfilePage />
+              <UserWrapper />
             </SuspensedView>
           }
         />
         <Route
-          path='crafted/pages/wizards/*'
+          path='campaigns'
           element={
             <SuspensedView>
-              <WizardsPage />
+              <CampaignWrapper />
             </SuspensedView>
           }
         />
         <Route
-          path='crafted/widgets/*'
+          path='comments'
           element={
             <SuspensedView>
-              <WidgetsPage />
+              <CommentsWrapper />
             </SuspensedView>
           }
         />
         <Route
-          path='crafted/account/*'
+          path='occasion'
           element={
             <SuspensedView>
-              <AccountPage />
+              <OccasionWrapper />
             </SuspensedView>
           }
         />
         <Route
-          path='apps/chat/*'
+          path='inquiry'
           element={
             <SuspensedView>
-              <ChatPage />
+              <InquiryWrapper />
             </SuspensedView>
           }
         />
         <Route
-          path='apps/user-management/*'
+          path='newsfeed/*'
           element={
             <SuspensedView>
-              <UsersPage />
+              <NewFeedPage />
+            </SuspensedView>
+          }
+        />
+        <Route
+          path='settings/*'
+          element={
+            <SuspensedView>
+              <SettingsPage />
             </SuspensedView>
           }
         />
@@ -79,7 +91,6 @@ const PrivateRoutes = () => {
     </Routes>
   )
 }
-
 const SuspensedView: FC<WithChildren> = ({children}) => {
   const baseColor = getCSSVariableValue('--bs-primary')
   TopBarProgress.config({
@@ -91,5 +102,4 @@ const SuspensedView: FC<WithChildren> = ({children}) => {
   })
   return <Suspense fallback={<TopBarProgress />}>{children}</Suspense>
 }
-
 export {PrivateRoutes}

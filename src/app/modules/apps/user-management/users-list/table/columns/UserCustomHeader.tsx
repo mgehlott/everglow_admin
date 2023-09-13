@@ -4,11 +4,12 @@ import {HeaderProps} from 'react-table'
 import {initialQueryState} from '../../../../../../../_everglow/helpers'
 import {useQueryRequest} from '../../core/QueryRequestProvider'
 import {User} from '../../core/_models'
+import { IUser } from '../../../../../../../types';
 
 type Props = {
   className?: string
   title?: string
-  tableProps: PropsWithChildren<HeaderProps<User>>
+  tableProps: PropsWithChildren<HeaderProps<IUser>>
 }
 const UserCustomHeader: FC<Props> = ({className, title, tableProps}) => {
   const id = tableProps.column.id

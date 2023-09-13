@@ -2,11 +2,10 @@
 import {FC} from 'react'
 import {ColumnInstance} from 'react-table'
 import {User} from '../../core/_models'
-
+import {IUser} from '../../../../../../../types'
 type Props = {
-  column: ColumnInstance<User>
+  column: ColumnInstance<IUser>
 }
-
 const CustomHeaderColumn: FC<Props> = ({column}) => (
   <>
     {column.Header && typeof column.Header === 'string' ? (
@@ -16,5 +15,4 @@ const CustomHeaderColumn: FC<Props> = ({column}) => (
     )}
   </>
 )
-
 export {CustomHeaderColumn}

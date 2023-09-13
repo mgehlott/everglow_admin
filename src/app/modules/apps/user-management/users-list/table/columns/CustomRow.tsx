@@ -3,9 +3,10 @@ import clsx from 'clsx'
 import {FC} from 'react'
 import {Row} from 'react-table'
 import {User} from '../../core/_models'
+import { IUser } from '../../../../../../../types';
 
 type Props = {
-  row: Row<User>
+  row: Row<IUser>
 }
 
 const CustomRow: FC<Props> = ({row}) => (

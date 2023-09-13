@@ -10,6 +10,7 @@ import {LOGO_IMG_URL} from '../../../../utils/constants'
 import ApiCallService from '../../../../api/apiCallService'
 import {LOGIN} from '../../../../api/apiEndPoints'
 import {APIJSON} from '../../../../api/apiJSON/auth'
+import {showToast} from '../../../../utils/tool'
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Wrong email format')
@@ -44,7 +45,7 @@ export function Login() {
           saveAuth(response.token)
           let user = response.user
           setCurrentUser(user)
-          console.log('logged in')
+          showToast('SUCCESS', 'Login Successful !!')
         } else {
           setLoading(false)
           setSubmitting(false)
@@ -104,7 +105,6 @@ export function Login() {
           )}
           type='email'
           name='email'
-          autoComplete='off'
         />
         {formik.touched.email && formik.errors.email && (
           <div className='fv-plugins-message-container'>

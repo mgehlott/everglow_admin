@@ -16,103 +16,88 @@ import {
   CardsWidget20,
   ListsWidget26,
   EngageWidget10,
+  StatisticsWidget5,
 } from '../../../_everglow/partials/widgets'
-
 const DashboardPage: FC = () => (
   <>
-    {/* begin::Row */}
-    <div className='row g-5 g-xl-10 mb-5 mb-xl-10'>
-      {/* begin::Col */}
-      <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
-        <CardsWidget20
-          className='h-md-50 mb-5 mb-xl-10'
-          description='Active Projects'
-          color='#F1416C'
-          img={toAbsoluteUrl('/media/patterns/vector-1.png')}
-        />
-        <CardsWidget7
-          className='h-md-50 mb-5 mb-xl-10'
-          description='Professionals'
-          icon={false}
-          stats={357}
-          labelColor='dark'
-          textColor='gray-300'
+    <div className='row g-5 g-md-8'>
+      <div className='col-md-3'>
+        <StatisticsWidget5
+          className='card-md-stretch mb-md-8'
+          svgIcon='/media/icons/duotune/ecommerce/ecm008.svg'
+          color='warning2'
+          iconColor='warning'
+          title='Campaigns'
+          titleColor='warning'
+          description='230'
+          to='/campaigns'
         />
       </div>
-      {/* end::Col */}
-
-      {/* begin::Col */}
-      <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
-        <CardsWidget17 className='h-md-50 mb-5 mb-xl-10' />
-        <ListsWidget26 className='h-lg-50' />
-      </div>
-      {/* end::Col */}
-
-      {/* begin::Col */}
-      <div className='col-xxl-6'>
-        <EngageWidget10 className='h-md-100' />
-      </div>
-      {/* end::Col */}
-    </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gx-5 gx-xl-10'>
-      {/* begin::Col */}
-      <div className='col-xxl-6 mb-5 mb-xl-10'>
-        {/* <app-new-charts-widget8 cssclassName="h-xl-100" chartHeight="275px" [chartHeightNumber]="275"></app-new-charts-widget8> */}
-      </div>
-      {/* end::Col */}
-
-      {/* begin::Col */}
-      <div className='col-xxl-6 mb-5 mb-xl-10'>
-        {/* <app-cards-widget18 cssclassName="h-xl-100" image="./assets/media/stock/600x600/img-65.jpg"></app-cards-widget18> */}
-      </div>
-      {/* end::Col */}
-    </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gy-5 gx-xl-8'>
-      <div className='col-xxl-4'>
-        <ListsWidget3 className='card-xxl-stretch mb-xl-3' />
-      </div>
-      <div className='col-xl-8'>
-        <TablesWidget10 className='card-xxl-stretch mb-5 mb-xl-8' />
-      </div>
-    </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gy-5 g-xl-8'>
-      <div className='col-xl-4'>
-        <ListsWidget2 className='card-xl-stretch mb-xl-8' />
-      </div>
-      <div className='col-xl-4'>
-        <ListsWidget6 className='card-xl-stretch mb-xl-8' />
-      </div>
-      <div className='col-xl-4'>
-        <ListsWidget4 className='card-xl-stretch mb-5 mb-xl-8' items={5} />
-        {/* partials/widgets/lists/_widget-4', 'class' => 'card-xl-stretch mb-5 mb-xl-8', 'items' => '5' */}
-      </div>
-    </div>
-    {/* end::Row */}
-
-    <div className='row g-5 gx-xxl-8'>
-      <div className='col-xxl-4'>
-        <MixedWidget8
-          className='card-xxl-stretch mb-xl-3'
-          chartColor='success'
-          chartHeight='150px'
+      <div className='col-md-3'>
+        <StatisticsWidget5
+          className='card-md-stretch mb-md-8'
+          svgIcon='/media/icons/duotune/general/gen049.svg'
+          color='info2'
+          iconColor='info'
+          titleColor='info'
+          title='Users'
+          description='146'
+          to='/users'
         />
       </div>
-      <div className='col-xxl-8'>
-        <TablesWidget5 className='card-xxl-stretch mb-5 mb-xxl-8' />
+      <div className='col-md-3'>
+        <StatisticsWidget5
+          className='card-xl-stretch mb-5 mb-md-8'
+          svgIcon='/media/icons/duotune/communication/com002.svg'
+          color='danger2'
+          iconColor='danger'
+          titleColor='danger'
+          title='Inquiry'
+          description='2'
+          to='/inquiry'
+        />
+      </div>
+      <div className='col-md-3'>
+        <StatisticsWidget5
+          className='card-xl-stretch mb-md-8'
+          svgIcon='/media/icons/duotune/general/gen016.svg'
+          color='success2'
+          iconColor='success'
+          titleColor='success'
+          title='NewsFeed'
+          description='10'
+          to='/newsfeed'
+        />
+      </div>
+    </div>
+    <div className='row g-8 g-md-8'>
+      <div className='col-md-3'>
+        <StatisticsWidget5
+          className='card-xl-stretch mb-md-8'
+          svgIcon='/media/icons/duotune/electronics/elc001.svg'
+          color='warning2'
+          iconColor='warning'
+          title='Occasion'
+          titleColor='warning'
+          description='6'
+          to='/occasion'
+        />
+      </div>
+      <div className='col-md-3'>
+        <StatisticsWidget5
+          className='card-xl-stretch mb-md-8'
+          svgIcon='/media/icons/duotune/communication/com012.svg'
+          color='info2'
+          iconColor='info'
+          titleColor='info'
+          title='Comments'
+          description='370'
+          to='/comments'
+        />
       </div>
     </div>
   </>
 )
-
 const DashboardWrapper: FC = () => {
   const intl = useIntl()
   return (
@@ -122,5 +107,4 @@ const DashboardWrapper: FC = () => {
     </>
   )
 }
-
 export {DashboardWrapper}
