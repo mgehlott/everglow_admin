@@ -1,7 +1,6 @@
 import {ILayout} from './_Models'
-
 export const DefaultConfig: ILayout = {
-  layoutType: 'dark-sidebar',
+  layoutType: 'light-sidebar',
   main: {
     componentName: 'main',
     type: 'default',
@@ -62,9 +61,9 @@ export const DefaultConfig: ILayout = {
         },
         minimize: {
           desktop: {
-            enabled: true,
+            enabled: false,
             default: false,
-            hoverable: true,
+            hoverable: false,
           },
         },
         menu: {

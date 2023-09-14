@@ -2,6 +2,8 @@ import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
+import { LOGO_URL } from '../../../../utils/utils';
+
 
 const SidebarLogo = () => {
   const {config} = useLayout()
@@ -29,8 +31,8 @@ const SidebarLogo = () => {
           <>
             <img
               alt='Logo'
-              src={toAbsoluteUrl('/media/logos/default.svg')}
-              className='h-25px app-sidebar-logo-default theme-light-show'
+              src={LOGO_URL}
+              className='h-50px app-sidebar-logo-default theme-light-show'
             />
             <img
               alt='Logo'

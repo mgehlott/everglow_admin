@@ -1,7 +1,12 @@
 import {useIntl} from 'react-intl'
 import {PageTitle} from '../../../_everglow/layout/core'
+import Occasions from './components/Occasions'
 const OccasionPage = () => {
-  return <h1>Occasion page</h1>
+  return (
+    <>
+      <Occasions />
+    </>
+  )
 }
 const OccasionWrapper = () => {
   const intl = useIntl()

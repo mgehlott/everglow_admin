@@ -37,7 +37,7 @@ const UsersTable = () => {
       const response = await apiService.callAPI()
       console.log(response)
       if (response) {
-        setFetchedUser(response.users)
+        setFetchedUser(response.data)
         if (totalUsers.current === 0) {
           totalUsers.current = response.totalUsers
         }

@@ -29,7 +29,9 @@ const UsersListPagination = ({page, setPage, totalUsers}: Props) => {
   }
   console.log('page', page)
   const itemsRangeLeft = page * 3 - 2
-  const itemsRangeRight = page*3
+  const totalPage = totalUsers % 3 > 0 ? Math.floor(totalUsers / 3) + 1 : Math.floor(totalUsers / 3)
+  const itemsRangeRight = page === totalPage ? page * 3 - 1 : page * 3
+  console.log('totalpage', totalPage)
   return (
     <div className='row'>
       <div className='col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'></div>
@@ -38,43 +40,50 @@ const UsersListPagination = ({page, setPage, totalUsers}: Props) => {
           <div>
             <div>{`${itemsRangeLeft} - ${itemsRangeRight} of ${totalUsers}`}</div>
           </div>
-          <a
-            href='#'
+          <button
+            className='btn btn-secondary btn-sm'
             style={{cursor: 'pointer'}}
-            className={clsx({disabled: page == 1})}
+            disabled={page === 1}
             onClick={() => {
               setPage(1)
             }}
           >
             First
-          </a>
+          </button>
           <div className='d-flex'>
-            <div onClick={() => setPage((page) => page - 1)}>
+            <div
+              onClick={() => {
+                if (page === 1) return
+                setPage((page) => page - 1)
+              }}
+            >
               <KTSVG
                 path='/media/icons/duotune/arrows/arr074.svg'
                 className={`svg-icon svg-icon-2x ms-n1`}
               />
             </div>
-            <div onClick={() => setPage((page) => page + 1)}>
+            <div
+              onClick={() => {
+                if (page === totalPage) return
+                setPage((page) => page + 1)
+              }}
+            >
               <KTSVG
                 path='/media/icons/duotune/arrows/arr071.svg'
                 className={`svg-icon svg-icon-2x ms-n1`}
               />
             </div>
           </div>
-          <a
-            href='#'
+          <button
+            className='btn btn-secondary btn-sm'
             style={{cursor: 'pointer'}}
-            className={clsx({disabled: page == 1})}
+            disabled={page === totalPage}
             onClick={() => {
-              const last =
-                totalUsers % 3 > 0 ? Math.floor(totalUsers / 3) + 1 : Math.floor(totalUsers / 3)
-              console.log(last)
-              setPage(last)
+              setPage(totalPage)
             }}
           >
             Last
-          </a>
+          </button>
           {/* <ul className='pagination'>
             {pagination.links
               ?.map((link) => {

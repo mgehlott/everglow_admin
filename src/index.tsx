@@ -31,7 +31,6 @@ if (container) {
           <AppRoutes />
         </AuthProvider>
       </EverglowI18nProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
