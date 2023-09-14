@@ -5,19 +5,17 @@ import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
 import {Header} from './Header'
 import {Navbar} from './Navbar'
-
 export function HeaderWrapper() {
   const {config, classes} = useLayout()
   if (!config.app?.header?.display) {
     return null
   }
-
   return (
-    <div id='kt_app_header' className='app-header'>
+    <div id='kt_app_header' className='app-header '>
       <div
         id='kt_app_header_container'
         className={clsx(
-          'app-container flex-lg-grow-1',
+          'app-container flex-grow-1',
           classes.headerContainer.join(' '),
           config.app?.header?.default?.containerClass
         )}
@@ -34,21 +32,11 @@ export function HeaderWrapper() {
               >
                 <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className=' svg-icon-1' />
               </div>
-              <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
-                <Link to='/dashboard' className='d-lg-none'>
-                  <img
-                    alt='Logo'
-                    src={toAbsoluteUrl('/media/logos/default-small.svg')}
-                    className='h-30px'
-                  />
-                </Link>
-              </div>
             </div>
           </>
         )}
-
         {!config.app.sidebar?.display && (
-          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15'>
+          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15 '>
             <Link to='/dashboard'>
               {config.layoutType !== 'dark-header' ? (
                 <img
@@ -73,10 +61,9 @@ export function HeaderWrapper() {
             </Link>
           </div>
         )}
-
         <div
           id='kt_app_header_wrapper'
-          className='d-flex align-items-stretch justify-content-end flex-lg-grow-1'
+          className='d-flex align-items-stretch justify-content-end flex-lg-grow-1 '
         >
           {/* {config.app.header.default?.content === 'menu' &&
             config.app.header.default.menu?.display && (

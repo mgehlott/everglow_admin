@@ -3,21 +3,7 @@ import {FC} from 'react'
 import {useIntl} from 'react-intl'
 import {toAbsoluteUrl} from '../../../_everglow/helpers'
 import {PageTitle} from '../../../_everglow/layout/core'
-import {
-  ListsWidget2,
-  ListsWidget3,
-  ListsWidget4,
-  ListsWidget6,
-  TablesWidget5,
-  TablesWidget10,
-  MixedWidget8,
-  CardsWidget7,
-  CardsWidget17,
-  CardsWidget20,
-  ListsWidget26,
-  EngageWidget10,
-  StatisticsWidget5,
-} from '../../../_everglow/partials/widgets'
+import {StatisticsWidget5} from '../../../_everglow/partials/widgets'
 const DashboardPage: FC = () => (
   <>
     <div className='row g-5 g-md-8'>

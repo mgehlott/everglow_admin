@@ -9,7 +9,6 @@ import {Link} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../../_everglow/helpers'
 import {PasswordMeterComponent} from '../../../../_everglow/assets/ts/components'
 import {useAuth} from '../core/Auth'
-
 const initialValues = {
   firstname: '',
   lastname: '',
@@ -18,7 +17,6 @@ const initialValues = {
   changepassword: '',
   acceptTerms: false,
 }
-
 const registrationSchema = Yup.object().shape({
   firstname: Yup.string()
     .min(3, 'Minimum 3 symbols')
@@ -45,10 +43,9 @@ const registrationSchema = Yup.object().shape({
     }),
   acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
 })
-
 export function Registration() {
   const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
+  const {saveAuth, saveUser} = useAuth()
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
@@ -64,7 +61,7 @@ export function Registration() {
         )
         saveAuth(auth)
         const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
+        saveUser(user)
       } catch (error) {
         console.error(error)
         saveAuth(undefined)
@@ -74,11 +71,9 @@ export function Registration() {
       }
     },
   })
-
   useEffect(() => {
     PasswordMeterComponent.bootstrap()
   }, [])
-
   return (
     <form
       className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
@@ -91,11 +86,9 @@ export function Registration() {
         {/* begin::Title */}
         <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
         {/* end::Title */}
-
         <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
       </div>
       {/* end::Heading */}
-
       {/* begin::Login options */}
       <div className='row g-3 mb-9'>
         {/* begin::Col */}
@@ -115,7 +108,6 @@ export function Registration() {
           {/* end::Google link */}
         </div>
         {/* end::Col */}
-
         {/* begin::Col */}
         <div className='col-md-6'>
           {/* begin::Google link */}
@@ -140,17 +132,14 @@ export function Registration() {
         {/* end::Col */}
       </div>
       {/* end::Login options */}
-
       <div className='separator separator-content my-14'>
         <span className='w-125px text-gray-500 fw-semibold fs-7'>Or with email</span>
       </div>
-
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
         </div>
       )}
-
       {/* begin::Form group Firstname */}
       <div className='fv-row mb-8'>
         <label className='form-label fw-bolder text-dark fs-6'>First name</label>
@@ -205,7 +194,6 @@ export function Registration() {
         )}
         {/* end::Form group */}
       </div>
-
       {/* begin::Form group Email */}
       <div className='fv-row mb-8'>
         <label className='form-label fw-bolder text-dark fs-6'>Email</label>
@@ -231,7 +219,6 @@ export function Registration() {
         )}
       </div>
       {/* end::Form group */}
-
       {/* begin::Form group Password */}
       <div className='fv-row mb-8' data-kt-password-meter='true'>
         <div className='mb-1'>
@@ -277,7 +264,6 @@ export function Registration() {
         </div>
       </div>
       {/* end::Form group */}
-
       {/* begin::Form group Confirm password */}
       <div className='fv-row mb-5'>
         <label className='form-label fw-bolder text-dark fs-6'>Confirm Password</label>
@@ -305,7 +291,6 @@ export function Registration() {
         )}
       </div>
       {/* end::Form group */}
-
       {/* begin::Form group */}
       <div className='fv-row mb-8'>
         <label className='form-check form-check-inline' htmlFor='kt_login_toc_agree'>
@@ -336,7 +321,6 @@ export function Registration() {
         )}
       </div>
       {/* end::Form group */}
-
       {/* begin::Form group */}
       <div className='text-center'>
         <button

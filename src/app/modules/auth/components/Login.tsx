@@ -11,6 +11,7 @@ import ApiCallService from '../../../../api/apiCallService'
 import {LOGIN} from '../../../../api/apiEndPoints'
 import {APIJSON} from '../../../../api/apiJSON/auth'
 import {showToast} from '../../../../utils/tool'
+import {UserModel} from '../core/_models'
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Wrong email format')
@@ -28,7 +29,7 @@ const initialValues = {
 }
 export function Login() {
   const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
+  const {saveAuth, saveUser} = useAuth()
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
@@ -43,8 +44,8 @@ export function Login() {
         console.log('response', response)
         if (response) {
           saveAuth(response.token)
-          let user = response.user
-          setCurrentUser(user)
+          let user = response.user as UserModel
+          saveUser(user)
           showToast('SUCCESS', 'Login Successful !!')
         } else {
           setLoading(false)
