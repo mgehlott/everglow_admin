@@ -1,13 +1,16 @@
 import {useEffect, useState} from 'react'
 import ApiCallService from '../api/apiCallService'
-function useFetchUrlParams<T>(apiName: string, page: number, limit: number): T[] {
+import {boolean} from 'yup'
+function useFetchUrlParams<T>(apiName: string, page: number, limit: number): [T[], boolean] {
   const [data, setData] = useState<Array<T>>([])
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     ;(() => {
       fethData()
     })()
   }, [page])
   const fethData = async () => {
+    setIsLoading(true)
     try {
       const apiService = new ApiCallService(apiName, {
         page: page,
@@ -21,7 +24,8 @@ function useFetchUrlParams<T>(apiName: string, page: number, limit: number): T[]
     } catch (error) {
       console.log(error)
     }
+    setIsLoading(false)
   }
-  return data
+  return [data, isLoading]
 }
 export default useFetchUrlParams

@@ -44,9 +44,10 @@ const DashboardPage: FC = () => (
         />
       </div>
       <div className='col-md-3'>
+        {/* gen016 or gen054*/}
         <StatisticsWidget5
           className='card-xl-stretch mb-md-8'
-          svgIcon='/media/icons/duotune/general/gen016.svg'
+          svgIcon='/media/icons/duotune/general/gen054.svg'
           color='success2'
           iconColor='success'
           titleColor='success'

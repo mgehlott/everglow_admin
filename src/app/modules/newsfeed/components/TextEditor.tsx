@@ -1,20 +1,51 @@
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
-const TextEditor = () => {
-  console.log('te')
+import {FormikProps} from 'formik'
+import {FormValues} from '../../../../types'
+type Props = {
+  formik: FormikProps<FormValues>
+}
+const TextEditor = ({formik}: Props) => {
+  let editor: DecoupledEditor
   return (
     <>
-      <h2>Using CKEditor&nbsp;5 build in React</h2>
+      <p className='fw-bold fs-6 mb-2'>Description</p>
       <CKEditor
-        editor={ClassicEditor}
-        data='<p>Hello from CKEditor&nbsp;5!</p>'
         onReady={(editor) => {
-          // You can store the "editor" and use when it is needed.
           console.log('Editor is ready to use!', editor)
+          editor = editor
+          // Insert the toolbar before the editable area.
+          editor.ui
+            .getEditableElement()
+            ?.parentElement?.insertBefore(
+              editor.ui.view.toolbar.element as Node,
+              editor.ui.getEditableElement() as Node
+            )
+        }}
+        editor={DecoupledEditor}
+        config={{
+          toolbar: [
+            '|',
+            'bold',
+            'italic',
+            'underline',
+            'strikeThrough',
+            'heading',
+            'fontsize',
+            'fontfamily',
+            'alignment',
+            'numberedList',
+            'bulletedList',
+            '|',
+            'undo',
+            'redo',
+          ],
         }}
         onChange={(event, editor) => {
           const data = editor.getData()
-          console.log({event, editor, data})
+          formik.setFieldValue('description', data)
+          console.log({data})
         }}
         onBlur={(event, editor) => {
           console.log('Blur.', editor)

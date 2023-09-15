@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import {checkIsActive, KTSVG, WithChildren} from '../../../../helpers'
 import {useLayout} from '../../../core'
-
 type Props = {
   to: string
   title: string
@@ -12,7 +11,6 @@ type Props = {
   fontIcon?: string
   hasBullet?: boolean
 }
-
 const SidebarMenuItem: FC<Props & WithChildren> = ({
   children,
   to,
@@ -25,9 +23,8 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
   const isActive = checkIsActive(pathname, to)
   const {config} = useLayout()
   const {app} = config
-
   return (
-    <div className='menu-item'>
+    <div className='menu-item fs-4'>
       <Link className={clsx('menu-link without-sub', {active: isActive})} to={to}>
         {hasBullet && (
           <span className='menu-bullet'>
@@ -37,17 +34,16 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
         {icon && app?.sidebar?.default?.menu?.iconType === 'svg' && (
           <span className='menu-icon'>
             {' '}
-            <KTSVG path={icon} className='svg-icon-2' />
+            <KTSVG path={icon} className='svg-icon-2' style={{fontSize: '2.5rem'}} />
           </span>
         )}
         {fontIcon && app?.sidebar?.default?.menu?.iconType === 'font' && (
           <i className={clsx('bi fs-3', fontIcon)}></i>
         )}
-        <span className='menu-title'>{title}</span>
+        <span className='menu-title fw-normal'>{title}</span>
       </Link>
       {children}
     </div>
   )
 }
-
 export {SidebarMenuItem}

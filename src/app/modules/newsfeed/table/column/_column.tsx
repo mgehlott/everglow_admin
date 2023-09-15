@@ -25,10 +25,19 @@ import Actions from './Actions'
 //     id: 'actions',
 //   },
 // ]
+
 const newsFeedColumn: TableColumn<INewsFeed>[] = [
   {
     name: 'Newsfeed Image',
-    cell: (row) => <img height='84px' width='76px' alt={row.title} src={row.imageUrl} />,
+    cell: (row) => (
+      <img
+        height='78px'
+        width='100px'
+        alt={row.title}
+        src={row.imageUrl}
+        style={{objectFit: 'cover'}}
+      />
+    ),
   },
   {
     name: 'Title',
@@ -40,7 +49,21 @@ const newsFeedColumn: TableColumn<INewsFeed>[] = [
     name: 'Description',
     selector: (row) => row.description,
     sortable: true,
-    cell: (row) => <div>{row.description}</div>,
+    cell: (row) => (
+      <div className='py-2'>
+        <div
+          className='bg-none'
+          dangerouslySetInnerHTML={{__html: row.description?.slice(0, 95)}}
+        ></div>
+        <button
+          className='btn btn-light text-primary p-0 px-2 bg-none'
+          data-bs-toggle='modal'
+          data-bs-target='#exampleModal'
+        >
+          <span style={{fontSize: '0.9rem', fontWeight: '500'}}>Read more</span>
+        </button>
+      </div>
+    ),
   },
   {
     name: 'Created At',

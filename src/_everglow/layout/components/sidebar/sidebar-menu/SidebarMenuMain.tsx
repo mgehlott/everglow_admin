@@ -10,7 +10,7 @@ const SidebarMenuMain = () => {
     <>
       <SidebarMenuItem
         to='/dashboard'
-        icon='/media/icons/duotune/art/art002.svg'
+        icon='/media/icons/duotune/general/gen001.svg'
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
       />
@@ -68,19 +68,19 @@ const SidebarMenuMain = () => {
       </SidebarMenuItemWithSub> */}
       <SidebarMenuItem
         to='/campaigns'
-        icon='/media/icons/duotune/general/gen051.svg'
+        icon='/media/icons/duotune/ecommerce/ecm008.svg'
         title='Campaigns'
         fontIcon='bi-layers'
       />
       <SidebarMenuItem
         to='/comments'
-        icon='/media/icons/duotune/general/gen051.svg'
+        icon='/media/icons/duotune/communication/com012.svg'
         title='Comments'
         fontIcon='bi-layers'
       />
       <SidebarMenuItem
         to='/occasion'
-        icon='/media/icons/duotune/general/gen051.svg'
+        icon='/media/icons/duotune/electronics/elc001.svg'
         title='Occasion'
         fontIcon='bi-layers'
       />
@@ -88,14 +88,14 @@ const SidebarMenuMain = () => {
         to='/newsfeed'
         title='NewsFeed'
         fontIcon='bi-archive'
-        icon='/media/icons/duotune/general/gen022.svg'
+        icon='/media/icons/duotune/general/gen016.svg'
       >
         <SidebarMenuItem to='/newsfeed/addnewsfeed' title='Add NewsFeed' hasBullet={true} />
         <SidebarMenuItem to='/newsfeed/viewnewsfeed' title='View NewsFeed' hasBullet={true} />
       </SidebarMenuItemWithSub>
       <SidebarMenuItem
         to='/inquiry'
-        icon='/media/icons/duotune/general/gen051.svg'
+        icon='/media/icons/duotune/communication/com002.svg'
         title='Inquiry'
         fontIcon='bi-layers'
       />

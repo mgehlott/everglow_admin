@@ -1,10 +1,8 @@
 import {FC} from 'react'
 import clsx from 'clsx'
 import {WithChildren} from '../react18MigrationHelpers'
-
 // Wrapper on html card:
 // https://preview.keenthemes.com/everglow8/demo1/documentation/base/cards.html
-
 type Props = {
   className?: string
   shadow?: boolean
@@ -19,7 +17,6 @@ type Props = {
   utilityPY?: number
   utilityPX?: number
 }
-
 const KTCard: FC<Props & WithChildren> = (props) => {
   const {
     className,
@@ -58,5 +55,4 @@ const KTCard: FC<Props & WithChildren> = (props) => {
     </div>
   )
 }
-
 export {KTCard}
