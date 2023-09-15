@@ -20,6 +20,9 @@ const KTCardBody: FC<Props & WithChildren> = (props) => {
         },
         height && `h-${height}px`
       )}
+      style={{
+        minHeight:'200px'
+      }}
     >
       {children}
     </div>

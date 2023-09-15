@@ -1,23 +1,23 @@
-import {useMemo, useState} from 'react'
 import {INewsFeed} from '../../../../types'
-import ApiCallService from '../../../../api/apiCallService'
 import {GETNEWSFEED} from '../../../../api/apiEndPoints'
 import useFetchUrlParams from '../../../../hooks/useFetchUrlParams'
 import newsFeedColumn from './column/_column'
-import {ColumnInstance, Row, useTable} from 'react-table'
-import {KTCardBody} from '../../../../_everglow/helpers'
 import DataTable from 'react-data-table-component'
+import {useState} from 'react'
+import Loader from '../../../../_everglow/partials/layout/Loader'
 const NewsFeedTable = () => {
   const [page, setPage] = useState(1)
-  const data = useFetchUrlParams<INewsFeed>(GETNEWSFEED, page, 3)
-  // const columns = useMemo(() => newsFeedColumn, [])
-  // const {getTableProps, getTableBodyProps, rows, prepareRow, headers} = useTable<INewsFeed>({
-  //   columns,
-  //   data,
-  // })
+  const [data, isLoading] = useFetchUrlParams<INewsFeed>(GETNEWSFEED, page, 3)
   console.log('data in nf', data)
-  // console.log(rows, headers)
-  return <DataTable columns={newsFeedColumn} data={data} title={<h1>View Table</h1>} pagination />
+  return (
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <DataTable columns={newsFeedColumn} data={data} title={<h1>View Table</h1>} pagination />
+      )}
+    </>
+  )
   // return (
   //   // <KTCardBody className='py-4'>
   //   //   <table

@@ -1,17 +1,16 @@
-import {FC} from 'react'
-import {INewsFeed} from '../../../../../types'
-import {KTSVG} from '../../../../../_everglow/helpers'
-import ApiCallService from '../../../../../api/apiCallService'
-import {DELETE_NEWSFEED} from '../../../../../api/apiEndPoints'
+import {ICampaign} from '../../../types/response_data/response'
+import {DELETE_CAMPAIGN} from '../../../api/apiEndPoints'
+import ApiCallService from '../../../api/apiCallService'
+import {KTSVG} from '../../../_everglow/helpers'
 type Props = {
-  row: INewsFeed
+  row: ICampaign
 }
-const Actions = ({row}: Props) => {
+const CampaignActions = ({row}: Props) => {
   console.log(row)
-  const deleteHandler = async (row: INewsFeed) => {
+  const deleteHandler = async (row: ICampaign) => {
     console.log('delete', row._id, row.title)
     try {
-      const appService = new ApiCallService(DELETE_NEWSFEED, `${row._id}`)
+      const appService = new ApiCallService(DELETE_CAMPAIGN, `${row._id}`)
       const response = await appService.callAPI()
       if (response) {
         console.log('deleted')
@@ -20,7 +19,7 @@ const Actions = ({row}: Props) => {
       console.log(error)
     }
   }
-  const editHandler = (row: INewsFeed): void => {
+  const editHandler = (row: ICampaign): void => {
     console.log('edit', row.title)
   }
   return (
@@ -40,4 +39,4 @@ const Actions = ({row}: Props) => {
     </div>
   )
 }
-export default Actions
+export default CampaignActions

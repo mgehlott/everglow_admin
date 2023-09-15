@@ -35,8 +35,10 @@ class ApiCallService {
       this.path = path
     }
     this.listApi = [apiEndpoints.LOGIN]
+    console.log('const', this.apiType, this.apiName, this.params)
   }
   async findSettings(apiName: any, apiType: any, params: any, path: any) {
+    console.log('settings', apiName, apiType, params)
     const resourceURL = `${this.url}${apiName}`
     var myHeaders = {}
     try {
@@ -57,6 +59,7 @@ class ApiCallService {
       method: '',
       data: {},
     }
+    console.log('switch', apiType)
     switch (apiType) {
       case constants.GET:
         settings.method = 'GET'
@@ -272,8 +275,10 @@ class ApiCallService {
         settings.headers = myHeaders
         settings.method = 'POST'
         settings.data = params
+        console.log('post', settings)
         break
       case constants.MULTI_PART_ID_PATCH:
+        console.log('patch')
         settings.url = resourceURL + '/' + this.objToUrlParams(path)
         settings.headers = myHeaders
         settings.method = 'PATCH'
@@ -293,6 +298,7 @@ class ApiCallService {
     return keyValuePairs.join('&')
   }
   objToUrlParams = (obj: any) => {
+    console.log('in obj', obj)
     return Object.values(obj).join('/')
   }
   objToURLEncodedString = (obj: any) => {
@@ -318,12 +324,14 @@ class ApiCallService {
     return form
   }
   async callAPI() {
+    console.log('call')
     const mObj = await GlobalValidations.checkNetConnection()
     if (!mObj) {
       let temp: any = window
       temp.location = temp.location.protocol + '//' + temp.location.host + '/error/network'
       return 0
     } else {
+      console.log('data', this.apiName, this.apiType, this.params)
       this.settings = await this.findSettings(this.apiName, this.apiType, this.params, this.path)
       console.log('settings', this.settings)
       return axios(this.settings.url, this.settings)
