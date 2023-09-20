@@ -8,3 +8,5 @@ export const POSTNEWSFEED = 'admin/addNewsFeed' + ' ' + constants.MULTI_PART_POS
 export const DELETE_NEWSFEED = 'admin/deleteNewsFeed' + ' ' + constants.DELETE_ID_PARAMS
 export const GET_ALL_CAMPAIGNS = 'admin/campaigns' + ' ' + constants.GET_URL_PARAMS
 export const DELETE_CAMPAIGN = 'admin/deleteCampaign' + ' ' + constants.DELETE_ID_PARAMS
+export const UPDATE_OCCASION = 'admin/updateOccasion' + ' ' + constants.MULTI_PART_ID_PATCH
+export const ADD_OCCASION = 'admin/addOccasion' + ' '  + constants.MULTI_PART_POST

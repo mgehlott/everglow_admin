@@ -3,4 +3,5 @@ export interface IOccasion {
   color: string
   icon?: string
   title: string
+  iconUrl?: string
 }

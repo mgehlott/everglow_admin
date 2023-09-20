@@ -2,7 +2,7 @@ import {KTCard, KTCardBody, KTSVG} from '../../../_everglow/helpers'
 import useFetchUrlParams from '../../../hooks/useFetchUrlParams'
 import {ICampaign} from '../../../types/response_data/response'
 import {GET_ALL_CAMPAIGNS} from '../../../api/apiEndPoints'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import Loader from '../../../_everglow/partials/layout/Loader'
 import DataTable, {TableColumn} from 'react-data-table-component'
 import moment from 'moment'
@@ -11,6 +11,7 @@ import {type} from 'os'
 import SearchInput from '../../ui/SearchInput'
 import DateInput from '../../ui/DateInput'
 import CampaignActions from './CampaignAction'
+import {Modal} from 'react-bootstrap'
 const customStyle = {
   rows: {
     style: {
@@ -29,11 +30,24 @@ const customStyle = {
     },
   },
 }
+type ModalData = {
+  _id?: string
+  title?: string
+  description?: string
+  occasion_name?: string
+  visibility?: string
+  duration?: string
+  allow_comments?: boolean
+  members?: number
+  created_by?: string
+}
 const CampaignWrapper = () => {
   const [page, setPage] = useState(1)
   // const [data, isLoading] = useFetchUrlParams<ICampaign>(GET_ALL_CAMPAIGNS, page, 10)
   const [data, setData] = useState<Array<ICampaign>>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currRow, setCurrRow] = useState<ICampaign>()
   const campaignColumn: Array<TableColumn<ICampaign>> = [
     {
       name: 'Image',
@@ -85,8 +99,13 @@ const CampaignWrapper = () => {
     },
     {
       name: 'Action',
-      center: true,
-      cell: (row) => <CampaignActions row={row} />,
+      cell: (row) => (
+        <CampaignActions
+          row={row}
+          modalOpenHandler={() => setIsModalOpen(true)}
+          setCurrRow={setCurrRow}
+        />
+      ),
     },
   ]
   const [searchTerm, setSearchTerm] = useState<string>('')
@@ -102,6 +121,33 @@ const CampaignWrapper = () => {
       clearTimeout(timer)
     }
   }, [searchTerm, date])
+  const modalData = useMemo(() => {
+    let obj: ModalData = {}
+    if (currRow) {
+      Object.entries(currRow).forEach((r) => {
+        if (r[0] === '_id') {
+          obj._id = r[1]
+        } else if (r[0] === 'title') {
+          obj.title = r[1]
+        } else if (r[0] === 'description') {
+          obj.description = r[1].substring(0, 30)
+        } else if (r[0] === 'occasionType') {
+          obj.occasion_name = r[1].title
+        } else if (r[0] === 'visibility') {
+          obj.visibility = +r[1] == 1 ? 'Public' : 'Private'
+        } else if (r[0] === 'duration') {
+          obj.duration = r[1] + ' mins'
+        } else if (r[0] === 'isCommentAllow') {
+          obj.allow_comments = r[1]
+        } else if (r[0] === 'joinedUsers') {
+          obj.members = r[1].length
+        } else if (r[0] === 'creator') {
+          obj.created_by = r[1].name
+        }
+      })
+    }
+    return obj
+  }, [isModalOpen])
   const fetchData = async () => {
     setIsLoading(true)
     try {
@@ -167,6 +213,29 @@ const CampaignWrapper = () => {
           </KTCardBody>
         )}
       </KTCard>
+      {
+        <Modal centered={true} show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+          <Modal.Header>
+            <div>
+              <h3>Campaign Details</h3>
+            </div>
+          </Modal.Header>
+          <Modal.Body>
+            {modalData &&
+              Object.entries(modalData).map((r) => {
+                console.log(r)
+                if (r[0] === '_id') return null
+                return (
+                  <div key={r[0]} className='mb-3 text-start'>
+                    <span className='fw-semibold text-capitalize'>{r[0].split('_').join(' ')}</span>
+                    {' : '}
+                    <span>{`${r[1]}`}</span>
+                  </div>
+                )
+              })}
+          </Modal.Body>
+        </Modal>
+      }
     </>
   )
 }

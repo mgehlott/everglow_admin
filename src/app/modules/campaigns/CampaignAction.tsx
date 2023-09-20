@@ -4,9 +4,11 @@ import ApiCallService from '../../../api/apiCallService'
 import {KTSVG} from '../../../_everglow/helpers'
 type Props = {
   row: ICampaign
+  modalOpenHandler: () => void
+  setCurrRow: (row: ICampaign) => void
 }
-const CampaignActions = ({row}: Props) => {
-  console.log(row)
+const CampaignActions = ({row, modalOpenHandler, setCurrRow}: Props) => {
+  console.log('cmp row', row)
   const deleteHandler = async (row: ICampaign) => {
     console.log('delete', row._id, row.title)
     try {
@@ -20,7 +22,9 @@ const CampaignActions = ({row}: Props) => {
     }
   }
   const editHandler = (row: ICampaign): void => {
-    console.log('edit', row.title)
+    modalOpenHandler()
+    setCurrRow(row)
+    console.log('edit')
   }
   return (
     <div className='d-flex justify-content-between  align-items-center'>
