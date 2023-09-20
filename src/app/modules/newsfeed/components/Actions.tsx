@@ -1,8 +1,8 @@
 import {FC} from 'react'
-import {INewsFeed} from '../../../../../types'
-import {KTSVG} from '../../../../../_everglow/helpers'
-import ApiCallService from '../../../../../api/apiCallService'
-import {DELETE_NEWSFEED} from '../../../../../api/apiEndPoints'
+import {INewsFeed} from '../../../../types'
+import {KTSVG} from '../../../../_everglow/helpers'
+import ApiCallService from '../../../../api/apiCallService'
+import {DELETE_NEWSFEED} from '../../../../api/apiEndPoints'
 type Props = {
   row: INewsFeed
 }

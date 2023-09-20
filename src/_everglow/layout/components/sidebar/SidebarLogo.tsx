@@ -2,9 +2,7 @@ import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
-import { LOGO_URL } from '../../../../utils/utils';
-
-
+import {LOGO_URL} from '../../../../utils/utils'
 const SidebarLogo = () => {
   const {config} = useLayout()
   const appSidebarDefaultMinimizeDesktopEnabled =
@@ -19,7 +17,11 @@ const SidebarLogo = () => {
   const toggleState = appSidebarDefaultMinimizeDesktopEnabled ? 'active' : ''
   const appSidebarDefaultMinimizeDefault = config.app?.sidebar?.default?.minimize?.desktop?.default
   return (
-    <div className='app-sidebar-logo px-6' id='kt_app_sidebar_logo'>
+    <div
+      className='app-sidebar-logo px-6'
+      id='kt_app_sidebar_logo'
+      style={{justifyContent: 'space-around'}}
+    >
       <Link to='/dashboard'>
         {config.layoutType === 'dark-sidebar' ? (
           <img
@@ -41,14 +43,12 @@ const SidebarLogo = () => {
             />
           </>
         )}
-
         <img
           alt='Logo'
           src={toAbsoluteUrl('/media/logos/default-small.svg')}
           className='h-20px app-sidebar-logo-minimize'
         />
       </Link>
-
       {(appSidebarDefaultMinimizeDesktopEnabled || appSidebarDefaultCollapseDesktopEnabled) && (
         <div
           id='kt_app_sidebar_toggle'
@@ -64,8 +64,10 @@ const SidebarLogo = () => {
           <KTSVG path='/media/icons/duotune/arrows/arr079.svg' className='svg-icon-2 rotate-180' />
         </div>
       )}
+      <h3 className='mt-auto' style={{color: '#9aadf2',fontSize:'1.9rem'}}>
+        EverGlow
+      </h3>
     </div>
   )
 }
-
 export {SidebarLogo}

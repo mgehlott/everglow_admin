@@ -38,12 +38,25 @@ const Navbar = () => {
       </div> */}
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
-          className={clsx('cursor-pointer symbol', userAvatarClass)}
+          className={`d-flex align-items-center gap-4 ${clsx('cursor-pointer symbol', userAvatarClass)}`}
           data-kt-menu-trigger="{default: 'click'}"
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='' />
+          {/* <img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='' /> */}
+          <div
+            className='d-flex align-items-center justify-content-center '
+            style={{
+              height: '40px',
+              width: '40px',
+              backgroundColor: '#9aadf2',
+              borderRadius: '100%',
+             
+            }}
+          >
+           <h2 className='text-white my-auto'>A</h2>
+          </div>
+          <div className='d-none d-lg-block my-auto'><h3   style={{color:'#9aadf2'}}>Admin</h3></div>
         </div>
         <HeaderUserMenu />
       </div>
