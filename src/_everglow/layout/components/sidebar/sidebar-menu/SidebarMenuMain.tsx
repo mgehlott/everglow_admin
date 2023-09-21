@@ -16,7 +16,7 @@ const SidebarMenuMain = () => {
       />
       <SidebarMenuItem
         to='/users'
-        icon='/media/icons/duotune/general/gen019.svg'
+        icon='/media/icons/duotune/communication/com006.svg'
         title='Users'
         fontIcon='bi-layers'
       />
@@ -103,7 +103,7 @@ const SidebarMenuMain = () => {
         to='/settings'
         title='Settings'
         fontIcon='bi-archive'
-        icon='/media/icons/duotune/general/gen022.svg'
+        icon='/media/icons/duotune/coding/cod001.svg'
       >
         <SidebarMenuItem to='/settings/aboutus' title='About Us' hasBullet={true} />
         <SidebarMenuItem to='/settings/privacypolicy' title='Privacy Policy' hasBullet={true} />

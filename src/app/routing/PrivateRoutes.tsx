@@ -4,21 +4,19 @@ import {MasterLayout} from '../../_everglow/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {WithChildren} from '../../_everglow/helpers'
-import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_everglow/assets/ts/_utils'
-import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper';
 const PrivateRoutes = () => {
-//   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
-//   const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
-//   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
-//   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
-//   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
-//   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
+  //   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
+  //   const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
+  //   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
+  //   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
+  //   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
+  //   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
   const UserWrapper = lazy(() => import('../modules/users/UserWrapper'))
   const CampaignWrapper = lazy(() => import('../modules/campaigns/CampaignWrapper'))
   const CommentsWrapper = lazy(() => import('../modules/comments/CommentsWrapper'))
   const OccasionWrapper = lazy(() => import('../modules/occasion/OccasionWrapper'))
-  const InquiryWrapper = lazy(() => import('../modules/inquiry/InquiryWrapper'))
+  const InquiryPage = lazy(() => import('../modules/inquiry/InquiryPage'))
   const NewFeedPage = lazy(() => import('../modules/newsfeed/NewsFeedPage'))
   const SettingsPage = lazy(() => import('../modules/settings/SettingsPage'))
   return (
@@ -65,7 +63,7 @@ const PrivateRoutes = () => {
           path='inquiry'
           element={
             <SuspensedView>
-              <InquiryWrapper />
+              <InquiryPage />
             </SuspensedView>
           }
         />

@@ -1,10 +1,7 @@
-import {PageTitle} from '../../../_everglow/layout/core'
-import {useIntl} from 'react-intl'
-import {UsersListWrapper} from '../apps/user-management/users-list/UsersList'
+
 import DataTable, {TableColumn} from 'react-data-table-component'
 import {IUser} from '../../../types'
 import moment from 'moment'
-import Actions from '../newsfeed/components/Actions'
 import {KTCard, KTCardBody} from '../../../_everglow/helpers'
 import {useEffect, useState} from 'react'
 import SearchInput from '../../ui/SearchInput'
@@ -92,7 +89,7 @@ const UserWrapper = () => {
     {
       name: 'Actions',
       center: true,
-      cell: (row) => <UserActions />,
+      cell: (row) =>  <UserActions isActive={row.isActive} _id={row._id} />,
     },
   ]
   return (
