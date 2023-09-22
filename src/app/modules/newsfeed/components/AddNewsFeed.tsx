@@ -126,7 +126,7 @@ const AddNewsFeed = () => {
             {/* end::Input group */}
           </div>
           {/* end::Scroll */}
-          <TextEditor />
+          <TextEditor formik={formik} data='' />
           {/* begin::Actions */}
           <div className=' pt-15'>
             <button

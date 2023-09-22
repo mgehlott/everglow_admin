@@ -104,6 +104,7 @@ const CampaignWrapper = () => {
           row={row}
           modalOpenHandler={() => setIsModalOpen(true)}
           setCurrRow={setCurrRow}
+          setData={setData}
         />
       ),
     },

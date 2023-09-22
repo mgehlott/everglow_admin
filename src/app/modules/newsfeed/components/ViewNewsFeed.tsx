@@ -2,10 +2,8 @@ import DataTable, {TableColumn} from 'react-data-table-component'
 import {KTCard, KTCardBody} from '../../../../_everglow/helpers'
 import Loader from '../../../../_everglow/partials/layout/Loader'
 import {GETNEWSFEED} from '../../../../api/apiEndPoints'
-import useFetchUrlParams from '../../../../hooks/useFetchUrlParams'
 import {INewsFeed} from '../../../../types'
 import {useEffect, useState} from 'react'
-//import newsFeedColumn from '../table/column/_column'
 import CusmtomModal from '../../../../_everglow/partials/modals/CustomModal/CustomModal'
 import moment from 'moment'
 import Actions from './Actions'
@@ -31,16 +29,17 @@ const customStyle = {
   },
 }
 const ViewNewsFeed = () => {
-  const [page, setPage] = useState(1)
-  //  const [data, isLoading] = useFetchUrlParams<INewsFeed>(GETNEWSFEED, page, 3)
+  const [currPage, setCurrPage] = useState(1)
   const [data, setData] = useState<Array<INewsFeed>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [description, setDescription] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [total, setTotal] = useState(0)
+  const perPageItem = 3
   useEffect(() => {
     ;(() => fetchData())()
-  }, [])
+  }, [currPage])
   useEffect(() => {
     const timer = setTimeout(() => {
       ;(() => fetchData())()
@@ -53,13 +52,15 @@ const ViewNewsFeed = () => {
     setIsLoading(true)
     try {
       const apiService = new ApiCallService(GETNEWSFEED, {
-        page: page,
+        page: currPage,
+        limit: perPageItem,
         searchTerm: searchTerm,
       })
       const response = await apiService.callAPI()
       console.log(response)
       if (response) {
         setData(response.data)
+        setTotal(response.total)
       }
     } catch (error) {
       console.log(error)
@@ -115,10 +116,14 @@ const ViewNewsFeed = () => {
     {
       name: 'Actions',
       center: true,
-      cell: (row) => <Actions row={row} />,
+      cell: (row) => <Actions row={row} setData={setData} />,
     },
   ]
-  console.log('data in nf', data)
+  console.log('data in newsfeed', data)
+  const handlePageChange = (page: number) => {
+    fetchData()
+  }
+  console.log('currpage,total,perpageitem', currPage, total, perPageItem)
   return (
     <KTCard>
       <div className='card-header mt-4' style={{display: 'block'}}>
@@ -139,11 +144,18 @@ const ViewNewsFeed = () => {
               columns={newsFeedColumn}
               data={data}
               customStyles={customStyle}
-              pagination
               highlightOnHover
-              dense
+              pagination
+              paginationServer
+              paginationComponentOptions={{
+                noRowsPerPage: true,
+              }}
+              paginationPerPage={perPageItem}
+              paginationTotalRows={total}
+              onChangePage={(page) => {
+                setCurrPage(page)
+              }}
               onRowClicked={(row, e) => {
-                console.log(row)
                 setDescription(row.description)
               }}
             />

@@ -34,7 +34,7 @@ type OptionType = {
   label: string
 }
 const CommentsWrapper = () => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<Array<IComment>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [description, setDescription] = useState('')
@@ -59,7 +59,7 @@ const CommentsWrapper = () => {
         campaign: selected?.value || '',
       })
       const response = await apiService.callAPI()
-      console.log(response)
+      console.log('comment response', response)
       if (response) {
         setData(response.result)
       }
@@ -116,9 +116,10 @@ const CommentsWrapper = () => {
     },
     {
       name: 'Action',
-      cell: (row) => <CommentAction row={row} />,
+      cell: (row) => <CommentAction row={row} setData={setData} />,
     },
   ]
+  console.log('comment', data)
   return (
     <KTCard>
       <div className='card-header mt-4' style={{display: 'block'}}>

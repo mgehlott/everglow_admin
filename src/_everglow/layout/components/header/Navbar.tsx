@@ -10,7 +10,7 @@ const btnIconClass = 'svg-icon-1'
 const Navbar = () => {
   const {config} = useLayout()
   return (
-    <div className='app-navbar flex-shrink-0 justify-items-end  '>
+    <div className='app-navbar flex-shrink-0 justify-items-end'>
       {/* <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
         <Search />
       </div>
@@ -38,7 +38,10 @@ const Navbar = () => {
       </div> */}
       <div className={clsx('app-navbar-item', itemClass)}>
         <div
-          className={`d-flex align-items-center gap-4 ${clsx('cursor-pointer symbol', userAvatarClass)}`}
+          className={`d-flex align-items-center gap-4 ${clsx(
+            'cursor-pointer symbol',
+            userAvatarClass
+          )}`}
           data-kt-menu-trigger="{default: 'click'}"
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
@@ -51,12 +54,13 @@ const Navbar = () => {
               width: '40px',
               backgroundColor: '#9aadf2',
               borderRadius: '100%',
-             
             }}
           >
-           <h2 className='text-white my-auto'>A</h2>
+            <h2 className='text-white my-auto'>A</h2>
           </div>
-          <div className='d-none d-lg-block my-auto'><h3   style={{color:'#9aadf2'}}>Admin</h3></div>
+          <div className='d-none d-lg-block my-auto'>
+            <h3 style={{color: '#9aadf2'}}>Admin</h3>
+          </div>
         </div>
         <HeaderUserMenu />
       </div>

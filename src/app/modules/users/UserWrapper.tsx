@@ -1,9 +1,8 @@
-
 import DataTable, {TableColumn} from 'react-data-table-component'
 import {IUser} from '../../../types'
 import moment from 'moment'
 import {KTCard, KTCardBody} from '../../../_everglow/helpers'
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import SearchInput from '../../ui/SearchInput'
 import Loader from '../../../_everglow/partials/layout/Loader'
 import ApiCallService from '../../../api/apiCallService'
@@ -28,11 +27,16 @@ const customStyle = {
 const Users = () => {
   return <UserWrapper />
 }
+const paginationComponentOptions = {
+  noRowsPerPage: true,
+}
 const UserWrapper = () => {
-  const [page, setPage] = useState(1)
+  // const [page, setPage] = useState(1)
   const [data, setData] = useState<Array<IUser>>([])
+  const [total, setTotal] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  //console.log('page state', page)
   useEffect(() => {
     ;(() => fetchData())()
   }, [])
@@ -44,22 +48,27 @@ const UserWrapper = () => {
       clearTimeout(timer)
     }
   }, [searchTerm])
-  const fetchData = async () => {
+  const fetchData = async (page: number = 1) => {
     setIsLoading(true)
     try {
       const apiService = new ApiCallService(GETUSERS, {
         page: page,
+        limit: 10,
         searchTerm: searchTerm,
       })
       const response = await apiService.callAPI()
       console.log(response)
       if (response) {
-        setData(response.data)
+        setData(response.result)
+        setTotal(response.total)
       }
     } catch (error) {
       console.log(error)
     }
     setIsLoading(false)
+  }
+  const handlePageChange = (page: number) => {
+    fetchData(page)
   }
   const usersColumn: TableColumn<IUser>[] = [
     {
@@ -89,7 +98,7 @@ const UserWrapper = () => {
     {
       name: 'Actions',
       center: true,
-      cell: (row) =>  <UserActions isActive={row.isActive} _id={row._id} />,
+      cell: (row) => <UserActions isActive={row.isActive} _id={row._id} />,
     },
   ]
   return (
@@ -114,10 +123,17 @@ const UserWrapper = () => {
               customStyles={customStyle}
               pagination
               highlightOnHover
+              paginationComponentOptions={paginationComponentOptions}
+              paginationServer
+              paginationTotalRows={total}
+              onChangePage={(page) => {
+                console.log('curr page', page)
+                handlePageChange(page)
+              }}
             />
           ) : (
             <div className='d-flex justify-content-center align-items-center '>
-              <h2>No News Feed</h2>
+              <h2>No User Found</h2>
             </div>
           )}
         </KTCardBody>
