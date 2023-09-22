@@ -31,29 +31,30 @@ const paginationComponentOptions = {
   noRowsPerPage: true,
 }
 const UserWrapper = () => {
-  // const [page, setPage] = useState(1)
+  const [currPage, setCurrPage] = useState(1)
   const [data, setData] = useState<Array<IUser>>([])
   const [total, setTotal] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const perPageItem = 5
   //console.log('page state', page)
   useEffect(() => {
-    ;(() => fetchData())()
+    ;(() => fetchData(currPage))()
   }, [])
   useEffect(() => {
     const timer = setTimeout(() => {
-      ;(() => fetchData())()
+      ;(() => fetchData(currPage))()
     }, 500)
     return () => {
       clearTimeout(timer)
     }
   }, [searchTerm])
-  const fetchData = async (page: number = 1) => {
-    setIsLoading(true)
+  const fetchData = async (page: number) => {
+    if (page == 1) setIsLoading(true)
     try {
       const apiService = new ApiCallService(GETUSERS, {
         page: page,
-        limit: 10,
+        limit: perPageItem,
         searchTerm: searchTerm,
       })
       const response = await apiService.callAPI()
@@ -65,10 +66,11 @@ const UserWrapper = () => {
     } catch (error) {
       console.log(error)
     }
-    setIsLoading(false)
+    if (page == 1) setIsLoading(false)
   }
   const handlePageChange = (page: number) => {
     fetchData(page)
+    setCurrPage(page)
   }
   const usersColumn: TableColumn<IUser>[] = [
     {
@@ -125,6 +127,7 @@ const UserWrapper = () => {
               highlightOnHover
               paginationComponentOptions={paginationComponentOptions}
               paginationServer
+              paginationPerPage={perPageItem}
               paginationTotalRows={total}
               onChangePage={(page) => {
                 console.log('curr page', page)

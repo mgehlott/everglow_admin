@@ -28,39 +28,42 @@ const customStyle = {
   },
 }
 const InquiryPage = () => {
-  const [page, setPage] = useState(1)
+  const [currPage, setCurrPage] = useState(1)
   const [data, setData] = useState<Array<IMessage>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [show, setShow] = useState(false)
+  const [total, setTotal] = useState(0)
+  const perPageItem = 5
   useEffect(() => {
-    ;(() => fetchData())()
+    ;(() => fetchData(currPage))()
   }, [])
   useEffect(() => {
     const timer = setTimeout(() => {
-      ;(() => fetchData())()
+      ;(() => fetchData(currPage))()
     }, 500)
     return () => {
       clearTimeout(timer)
     }
   }, [searchTerm])
-
-  const fetchData = async () => {
-    setIsLoading(true)
+  const fetchData = async (page: number) => {
+    if (page == 1) setIsLoading(true)
     try {
       const apiService = new ApiCallService(GET_MESSAGES, {
         page: page,
+        limit: perPageItem,
         name: searchTerm,
       })
       const response = await apiService.callAPI()
       console.log(response)
       if (response) {
         setData(response.result)
+        setTotal(response.total)
       }
     } catch (error) {
       console.log(error)
     }
-    setIsLoading(false)
+    if (page == 1) setIsLoading(false)
   }
   const messageTable: TableColumn<IMessage>[] = [
     {
@@ -92,11 +95,15 @@ const InquiryPage = () => {
       center: true,
       cell: (row) => (
         <div>
-          <InquiryAction row={row} setData={setData}/>
+          <InquiryAction row={row} setData={setData} />
         </div>
       ),
     },
   ]
+  const handlePageChange = (page: number) => {
+    fetchData(page)
+    setCurrPage(page)
+  }
   return (
     <>
       <KTCard>
@@ -120,6 +127,13 @@ const InquiryPage = () => {
                 customStyles={customStyle}
                 pagination
                 highlightOnHover
+                paginationServer
+                paginationComponentOptions={{
+                  noRowsPerPage: true,
+                }}
+                paginationPerPage={perPageItem}
+                paginationTotalRows={total}
+                onChangePage={handlePageChange}
               />
             ) : (
               <div className='d-flex justify-content-center align-items-center '>
@@ -133,7 +147,6 @@ const InquiryPage = () => {
           </KTCardBody>
         )}
       </KTCard>
-     
     </>
   )
 }

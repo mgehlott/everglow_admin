@@ -38,21 +38,25 @@ const ViewNewsFeed = () => {
   const [total, setTotal] = useState(0)
   const perPageItem = 3
   useEffect(() => {
-    ;(() => fetchData())()
-  }, [currPage])
+    ;(() => {
+      fetchData(currPage)
+    })()
+  }, [])
   useEffect(() => {
     const timer = setTimeout(() => {
-      ;(() => fetchData())()
+      ;(() => {
+        fetchData(currPage)
+      })()
     }, 500)
     return () => {
       clearTimeout(timer)
     }
   }, [searchTerm])
-  const fetchData = async () => {
-    setIsLoading(true)
+  const fetchData = async (page: number) => {
+    if (page == 1) setIsLoading(true)
     try {
       const apiService = new ApiCallService(GETNEWSFEED, {
-        page: currPage,
+        page: page,
         limit: perPageItem,
         searchTerm: searchTerm,
       })
@@ -65,7 +69,7 @@ const ViewNewsFeed = () => {
     } catch (error) {
       console.log(error)
     }
-    setIsLoading(false)
+    if (page == 1) setIsLoading(false)
   }
   const newsFeedColumn: TableColumn<INewsFeed>[] = [
     {
@@ -121,7 +125,9 @@ const ViewNewsFeed = () => {
   ]
   console.log('data in newsfeed', data)
   const handlePageChange = (page: number) => {
-    fetchData()
+    console.log('handle change', page)
+    fetchData(page)
+    setCurrPage(page)
   }
   console.log('currpage,total,perpageitem', currPage, total, perPageItem)
   return (
@@ -129,7 +135,7 @@ const ViewNewsFeed = () => {
       <div className='card-header mt-4' style={{display: 'block'}}>
         <div className='row mb-4'>
           <div className='card-title col-lg'>
-            <h3 className='card-label'>View Campaign</h3>
+            <h3 className='card-label'>View NewsFeed</h3>
           </div>
           <div className=' col-lg-6'>
             <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -138,7 +144,7 @@ const ViewNewsFeed = () => {
       </div>
       {isLoading === false ? (
         <KTCardBody>
-          {data && data.length > 0 ? (
+          {data.length > 0 ? (
             <DataTable
               responsive
               columns={newsFeedColumn}
@@ -152,9 +158,7 @@ const ViewNewsFeed = () => {
               }}
               paginationPerPage={perPageItem}
               paginationTotalRows={total}
-              onChangePage={(page) => {
-                setCurrPage(page)
-              }}
+              onChangePage={handlePageChange}
               onRowClicked={(row, e) => {
                 setDescription(row.description)
               }}
@@ -184,7 +188,7 @@ const ViewNewsFeed = () => {
         </Modal.Header>
         <Modal.Body>
           {' '}
-          <div dangerouslySetInnerHTML={{__html: description}}></div>
+          <div className='fs-5' dangerouslySetInnerHTML={{__html: description}}></div>
         </Modal.Body>
       </CusmtomModal>
     </KTCard>

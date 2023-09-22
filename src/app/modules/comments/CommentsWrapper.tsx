@@ -38,12 +38,14 @@ const CommentsWrapper = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [description, setDescription] = useState('')
-  const [page, setPage] = useState(1)
+  const [currPage, setCurrPage] = useState(1)
   const [campaigns, setCampaigns] = useState<Array<ICampaignName>>([])
   const [selected, setSelected] = useState<OptionType>()
+  const [total, setTotal] = useState(0)
+  const pagePerItem = 3
   useEffect(() => {
     ;(() => {
-      fetchComments()
+      fetchComments(currPage)
     })()
   }, [selected])
   useEffect(() => {
@@ -51,22 +53,24 @@ const CommentsWrapper = () => {
       fetchCampaign()
     })()
   }, [])
-  const fetchComments = async () => {
-    setIsLoading(true)
+  const fetchComments = async (page: number) => {
+    if (page == 1) setIsLoading(true)
     try {
       const apiService = new ApiCallService(GET_COMMENTS, {
         page: page,
+        limit: pagePerItem,
         campaign: selected?.value || '',
       })
       const response = await apiService.callAPI()
       console.log('comment response', response)
       if (response) {
         setData(response.result)
+        setTotal(response.total)
       }
     } catch (error) {
       console.log(error)
     }
-    setIsLoading(false)
+    if (page == 1) setIsLoading(false)
   }
   const fetchCampaign = async () => {
     try {
@@ -120,6 +124,10 @@ const CommentsWrapper = () => {
     },
   ]
   console.log('comment', data)
+  const handlePageChange = (page: number) => {
+    fetchComments(page)
+    setCurrPage(page)
+  }
   return (
     <KTCard>
       <div className='card-header mt-4' style={{display: 'block'}}>
@@ -157,7 +165,13 @@ const CommentsWrapper = () => {
               customStyles={customStyle}
               pagination
               highlightOnHover
-              dense
+              paginationServer
+              paginationComponentOptions={{
+                noRowsPerPage: true,
+              }}
+              paginationPerPage={pagePerItem}
+              paginationTotalRows={total}
+              onChangePage={handlePageChange}
               onRowClicked={(row, e) => {
                 console.log(row)
                 setDescription(row.description)
@@ -188,7 +202,7 @@ const CommentsWrapper = () => {
         </Modal.Header>
         <Modal.Body>
           {' '}
-          <div dangerouslySetInnerHTML={{__html: description}}></div>
+          <div className='fs-4' dangerouslySetInnerHTML={{__html: description}}></div>
         </Modal.Body>
       </CusmtomModal>
     </KTCard>
