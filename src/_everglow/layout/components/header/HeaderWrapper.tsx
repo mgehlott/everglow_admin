@@ -62,7 +62,7 @@ export function HeaderWrapper() {
           </div>
         )}
         <div
-          id='kt_app_header_wrapper'
+          id='kt_app_header_wrapper bg-danger'
           className='d-flex align-items-stretch justify-content-end flex-lg-grow-1 '
         >
           {/* {config.app.header.default?.content === 'menu' &&

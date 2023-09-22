@@ -24,8 +24,8 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
   const {config} = useLayout()
   const {app} = config
   return (
-    <div className='menu-item fs-4'>
-      <Link className={clsx('menu-link without-sub', {active: isActive})} to={to}>
+    <div className='menu-item'>
+      <Link className={clsx('menu-link without-sub d-flex  ', {active: isActive})} to={to}>
         {hasBullet && (
           <span className='menu-bullet'>
             <span className='bullet bullet-dot'></span>
@@ -34,13 +34,15 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
         {icon && app?.sidebar?.default?.menu?.iconType === 'svg' && (
           <span className='menu-icon'>
             {' '}
-            <KTSVG path={icon} className='svg-icon-2' style={{fontSize: '2.5rem'}} />
+            <KTSVG path={icon} className='svg-icon-2' style={{fontSize: '3rem'}} />
           </span>
         )}
         {fontIcon && app?.sidebar?.default?.menu?.iconType === 'font' && (
           <i className={clsx('bi fs-3', fontIcon)}></i>
         )}
-        <span className='menu-title fw-normal'>{title}</span>
+        <span className='menu-title  mt-3' style={{fontSize: '1.1rem', fontWeight: '500'}}>
+          {title}
+        </span>
       </Link>
       {children}
     </div>

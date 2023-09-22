@@ -42,12 +42,12 @@ type ModalData = {
   created_by?: string
 }
 const CampaignWrapper = () => {
-  const [page, setPage] = useState(1)
-  // const [data, isLoading] = useFetchUrlParams<ICampaign>(GET_ALL_CAMPAIGNS, page, 10)
+  const [currPage, setCurrPage] = useState(1)
   const [data, setData] = useState<Array<ICampaign>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currRow, setCurrRow] = useState<ICampaign>()
+  const [total, setTotal] = useState(0)
   const campaignColumn: Array<TableColumn<ICampaign>> = [
     {
       name: 'Image',
@@ -104,18 +104,20 @@ const CampaignWrapper = () => {
           row={row}
           modalOpenHandler={() => setIsModalOpen(true)}
           setCurrRow={setCurrRow}
+          setData={setData}
         />
       ),
     },
   ]
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [date, setDate] = useState('')
+  const pagePerItem = 5
   useEffect(() => {
-    ;(() => fetchData())()
+    ;(() => fetchData(currPage))()
   }, [])
   useEffect(() => {
     const timer = setTimeout(() => {
-      ;(() => fetchData())()
+      ;(() => fetchData(currPage))()
     }, 500)
     return () => {
       clearTimeout(timer)
@@ -148,11 +150,12 @@ const CampaignWrapper = () => {
     }
     return obj
   }, [isModalOpen])
-  const fetchData = async () => {
-    setIsLoading(true)
+  const fetchData = async (page: number) => {
+    if (page == 1) setIsLoading(true)
     try {
       const apiService = new ApiCallService(GET_ALL_CAMPAIGNS, {
         page: page,
+        limit: pagePerItem,
         searchTerm: searchTerm,
         startDate: date,
       })
@@ -160,13 +163,18 @@ const CampaignWrapper = () => {
       console.log(response)
       if (response) {
         setData(response.data)
+        setTotal(response.total)
       }
     } catch (error) {
       console.log(error)
     }
-    setIsLoading(false)
+    if (page == 1) setIsLoading(false)
   }
   console.log('campaign', data, isLoading)
+  const handlePageChange = (page: number) => {
+    fetchData(page)
+    setCurrPage(page)
+  }
   return (
     <>
       <KTCard>
@@ -195,11 +203,13 @@ const CampaignWrapper = () => {
                 customStyles={customStyle}
                 pagination
                 highlightOnHover
-                dense
-                // onRowClicked={(row, e) => {
-                //   console.log(row)
-                //   setDescription(row.description)
-                // }}
+                paginationServer
+                paginationComponentOptions={{
+                  noRowsPerPage: true,
+                }}
+                paginationPerPage={pagePerItem}
+                paginationTotalRows={total}
+                onChangePage={handlePageChange}
               />
             ) : (
               <div className='d-flex justify-content-center align-items-center'>

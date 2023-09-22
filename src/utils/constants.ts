@@ -26,6 +26,7 @@ export const DELETE = 'DELETE'
 export const DELETE_URL_PARAMS = 'DELETE_URL_PARAMS'
 export const DELETE_URL_ENCODED = 'DELETE_URL_ENCODED'
 export const DELETE_ID_PARAMS = 'DELETE_ID_PARAMS'
+export const DELETE_ID_PARAMS_BODY = 'DELETE_ID_PARAMS_BODY'
 //Response
 export const ResponseFail = 400
 export const ResponseSuccess = 200

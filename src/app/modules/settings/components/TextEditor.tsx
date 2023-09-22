@@ -3,11 +3,12 @@ import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import {FormikProps} from 'formik'
 import {FormValues} from '../../../../types'
+import {SetStateAction} from 'react'
 type Props = {
-  formik: FormikProps<FormValues>
   data: string
+  setData: React.Dispatch<SetStateAction<string>>
 }
-const TextEditor = ({formik, data}: Props) => {
+const TextEditor = ({data, setData}: Props) => {
   let editor: DecoupledEditor
   return (
     <>
@@ -46,7 +47,8 @@ const TextEditor = ({formik, data}: Props) => {
         }}
         onChange={(event, editor) => {
           const data = editor.getData()
-          formik.setFieldValue('description', data)
+          //     formik.setFieldValue('description', data)
+          setData(data)
           console.log({data})
         }}
         onBlur={(event, editor) => {

@@ -35,7 +35,7 @@ class ApiCallService {
       this.path = path
     }
     this.listApi = [apiEndpoints.LOGIN]
-    console.log('const', this.apiType, this.apiName, this.params)
+    console.log('const', this.apiType, this.apiName, this.params, this.path)
   }
   async findSettings(apiName: any, apiType: any, params: any, path: any) {
     console.log('settings', apiName, apiType, params)
@@ -255,6 +255,17 @@ class ApiCallService {
       case constants.DELETE_URL_PARAMS:
         settings.method = 'DELETE'
         settings.url = resourceURL + '?' + this.objToQueryString(params)
+        break
+      case constants.DELETE_ID_PARAMS_BODY:
+        myHeaders = {
+          ...myHeaders,
+          'Content-Type': 'application/json',
+        }
+        settings.headers = myHeaders
+        settings.method = 'DELETE'
+        settings.data = JSON.stringify(params)
+        console.log('path', path)
+        settings.url = resourceURL + '/' + path
         break
       case constants.DELETE_URL_ENCODED:
         myHeaders = {

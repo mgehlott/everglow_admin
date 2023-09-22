@@ -7,7 +7,7 @@ import {FormValues} from '../../../../types'
 import ApiCallService from '../../../../api/apiCallService'
 import {POSTNEWSFEED} from '../../../../api/apiEndPoints'
 import {showToast} from '../../../../utils/tool'
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 const feedValidationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   description: Yup.string().required('Description is required'),
@@ -126,7 +126,7 @@ const AddNewsFeed = () => {
             {/* end::Input group */}
           </div>
           {/* end::Scroll */}
-          <TextEditor formik={formik} />
+          <TextEditor formik={formik} data='' />
           {/* begin::Actions */}
           <div className=' pt-15'>
             <button

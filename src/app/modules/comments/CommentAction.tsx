@@ -1,65 +1,54 @@
-import {ICampaign} from '../../../types/response_data/response'
-import {DELETE_CAMPAIGN} from '../../../api/apiEndPoints'
+import {ICampaign, IComment} from '../../../types/response_data/response'
+import {DELETE_CAMPAIGN, DELETE_COMMENT} from '../../../api/apiEndPoints'
 import ApiCallService from '../../../api/apiCallService'
 import {KTCardBody, KTSVG} from '../../../_everglow/helpers'
+import {DELETE_ID_PARAMS_BODY} from '../../../utils/constants'
 import {useState} from 'react'
-import {Button, Modal, Spinner} from 'react-bootstrap'
+import {Button, Modal} from 'react-bootstrap'
 import Loader from '../../../_everglow/partials/layout/Loader'
 import {showToast} from '../../../utils/tool'
 type Props = {
-  row: ICampaign
-  modalOpenHandler: () => void
-  setCurrRow: (row: ICampaign) => void
-  setData: React.Dispatch<React.SetStateAction<ICampaign[]>>
+  row: IComment
+  setData: React.Dispatch<React.SetStateAction<IComment[]>>
 }
-const CampaignActions = ({row, modalOpenHandler, setCurrRow, setData}: Props) => {
+const CommentAction = ({row, setData}: Props) => {
   const [show, setShow] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [isViewLoading, setIsViewLoading] = useState(false)
-  const deleteHandler = async (row: ICampaign) => {
-    console.log('delete', row._id, row.title)
+  const deleteHandler = async (row: IComment) => {
+    console.log('delete', row._id)
     setIsLoading(true)
     try {
-      const appService = new ApiCallService(DELETE_CAMPAIGN, `${row._id}`)
+      const appService = new ApiCallService(
+        DELETE_COMMENT,
+        {
+          campaignId: row.campaignId,
+        },
+        `${row._id}`
+      )
       const response = await appService.callAPI()
+      console.log('res', response)
       if (response) {
         console.log('deleted')
-        setData((prevData) => {
-          return prevData.filter((item) => item._id !== row._id)
+        showToast('SUCCESS', 'Comment is deleted')
+        setData((preData) => {
+          return preData.filter((item) => item._id !== row._id)
         })
-        showToast('SUCCESS', 'Campaign Deleted')
       }
     } catch (error) {
       console.log(error)
-      showToast('ERROR', 'Something went wrong ,Try again later')
+      showToast('ERROR', 'Something went wrong,Try again later')
     }
     setIsLoading(false)
-    setShow(false)
-  }
-  const editHandler = (row: ICampaign): void => {
-    setIsViewLoading(true)
-    setTimeout(() => {
-      setIsViewLoading(false)
-      modalOpenHandler()
-    }, 500)
-    setCurrRow(row)
-    console.log('edit')
   }
   return (
     <>
-      <div className='d-flex  align-items-center w-50 gap-4 '>
-        <div className='me-1 ml-3'>
-          {isViewLoading === false ? (
-            <div onClick={() => editHandler(row)}>
-              <span>
-                <i className='bi bi-eye-fill' style={{fontSize: '1.8rem', color: '#009ef7'}}></i>
-              </span>
-            </div>
-          ) : (
-            <Spinner animation='border' role='status' style={{width: '18px', height: '18px'}} />
-          )}
-        </div>
-        <div onClick={() => setShow(true)}>
+      <div className='d-flex justify-content-between  align-items-center'>
+        <div
+          onClick={() => {
+            console.log('row', row)
+            setShow(true)
+          }}
+        >
           <KTSVG
             path='/media/icons/duotune/general/gen027.svg'
             svgClassName='w-25px h-40px'
@@ -94,4 +83,4 @@ const CampaignActions = ({row, modalOpenHandler, setCurrRow, setData}: Props) =>
     </>
   )
 }
-export default CampaignActions
+export default CommentAction
